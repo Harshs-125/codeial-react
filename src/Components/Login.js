@@ -1,11 +1,22 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-function Login(props) {
+class Login extends Component {
+  render() {
     return (
-        <div>
-            <h1>Login page</h1>
+      <form className="login-form">
+        <span className="login-signup-header">LoginIn</span>
+        <div className="field">
+          <input type="email" placeholder="Email" required></input>
         </div>
+        <div className="field">
+          <input type="password" placeholder="Password" required />
+        </div>
+        <div className='field'>
+            <button>Login   </button>
+        </div>
+      </form>
     );
+  }
 }
 
 export default Login;
