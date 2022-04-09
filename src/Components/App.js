@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import jwtDecode from 'jwt-decode';
 import {
   BrowserRouter as Router,
   Routes,
@@ -8,11 +9,16 @@ import {
   Switch,
 } from 'react-router-dom';
 import { fetchPosts } from '../Actions/post';
-import { Home, Navbar, page404, Login,Signup } from './index';
+import { Home, Navbar, page404, Login, Signup } from './index';
 
 class App extends Component {
   componentDidMount() {
     this.props.dispatch(fetchPosts());
+    const token = localStorage.getItem('token');
+    if (token) {
+      const user = jwtDecode(token);
+      console.log('user', user);
+    }
   }
 
   render() {
