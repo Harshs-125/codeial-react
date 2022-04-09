@@ -43,14 +43,3 @@ export function signup(name, email, password) {
       });
   };
 }
-export function authenticateUser(user){
-    return {
-        type:AUTHENTICATE_USER,
-        user
-    };
-}
-export function logoutUser(){
-    return {
-        type:LOG_OUT,
-    };
-}

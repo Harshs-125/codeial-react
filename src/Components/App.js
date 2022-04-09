@@ -10,6 +10,7 @@ import {
 } from 'react-router-dom';
 import { fetchPosts } from '../Actions/post';
 import { Home, Navbar, page404, Login, Signup } from './index';
+import { authenticateUser} from '../Actions/auth';
 
 class App extends Component {
   componentDidMount() {
@@ -17,7 +18,13 @@ class App extends Component {
     const token = localStorage.getItem('token');
     if (token) {
       const user = jwtDecode(token);
-      console.log('user', user);
+      this.props.dispatch(
+        authenticateUser({
+          email: user.email,
+          _id: user._id,
+          name: user.name,
+        })
+      );
     }
   }
 
