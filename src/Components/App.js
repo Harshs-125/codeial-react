@@ -12,9 +12,7 @@ import { fetchPosts } from '../Actions/post';
 import { Home, Navbar, page404, Login, Signup } from './index';
 import { authenticateUser } from '../Actions/auth';
 import { Redirect } from 'react-router-dom';
-function Setting(props) {
-  return <div>Settings</div>;
-}
+import Settings from './Settings';
 function PrivateRoute(props) {
   const { isLoggedin, path, component: Component } = props;
   console.log(props);
@@ -22,7 +20,7 @@ function PrivateRoute(props) {
     <Route
       path={path}
       render={(props) => {
-        return isLoggedin ? <Setting /> : <Redirect to="/login" />;
+        return isLoggedin ? <Settings /> : <Redirect to="/login" />;
       }}
     />
   );
@@ -74,7 +72,7 @@ class App extends Component {
             />
             <PrivateRoute
               path="/settings"
-              component={Setting}
+              component={Settings}
               isLoggedin={this.props.auth.isLoggedIn}
             />
             <Route component={page404} />
