@@ -1,8 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 import { signup, signupFailed } from '../Actions/signup';
 import { connect } from 'react-redux';
+import { clearAuthState } from '../Actions/auth';
 
 function Signup(props) {
+  useEffect(()=>()=>{
+    console.log("un");
+    props.dispatch(clearAuthState());
+  },[])
   const [userDetails, setUserDetails] = useState({
     name: '',
     email: '',
@@ -32,7 +38,10 @@ function Signup(props) {
       return;
     }
   }
-  console.log(props.signup);
+  if(props.auth.isLoggedIn){
+    return <Redirect to='/'/>
+  }
+  console.log(props);
   // const {error,inProgress} =props.signup;
   return (
     <form className="login-form">
@@ -100,6 +109,7 @@ function mapStateToProps(state) {
   console.log(state);
   return {
     signup: state.signup,
+    auth:state.auth
   };
 }
 export default connect(mapStateToProps)(Signup);

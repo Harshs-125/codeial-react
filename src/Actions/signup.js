@@ -18,6 +18,12 @@ export function signupSuccess(user) {
     user
   };
 }
+export function authenticateUser(user){
+  return {
+      type:AUTHENTICATE_USER,
+      user
+  };
+}
 export function signup(name, email, password) {
   console.log(email + ' ' + name +' '+password);
   return (dispatch) => {
