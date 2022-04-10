@@ -9,10 +9,10 @@ import {
   Switch,
 } from 'react-router-dom';
 import { fetchPosts } from '../Actions/post';
-import { Home, Navbar, page404, Login, Signup } from './index';
+import { Home, Navbar, page404, Login, Signup,Settings } from './index';
 import { authenticateUser } from '../Actions/auth';
 import { Redirect } from 'react-router-dom';
-import Settings from './Settings';
+
 function PrivateRoute(props) {
   const { isLoggedin, path, component: Component } = props;
   console.log(props);

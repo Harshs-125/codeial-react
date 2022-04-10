@@ -5,12 +5,37 @@ import user from './assets/user.png';
 function Settings(props) {
   const { user } = props.auth;
   const [state, setState] = useState({
-    name: '',
+    name: props.auth.user.name,
     password: '',
     confirmPassword: '',
     editMode: false,
   });
-  function handleChange() {}
+  function handleChange(event) {
+     const {name,value}=event.target;
+     setState(prevValue=>{
+       return {
+         ...prevValue,
+         [name]:value 
+       }
+     })
+  }
+  function handleClickEdit(event){
+    event.preventDefault();
+    setState(prevValue=>{
+      if(state.editMode)
+      {
+        return{
+          ...prevValue,
+          editMode:false
+        }
+      }
+      return {
+        ...prevValue,
+        editMode:true
+      }
+    })
+  }
+  console.log(state);
   return (
     <div className="settings">
       <div className="img-container">
@@ -23,7 +48,7 @@ function Settings(props) {
       <div className="field">
         <div className="field-label">Name</div>
         {state.editMode ? (
-          <input type="text" onChange={handleChange} value={state.name} />
+          <input type="text" onChange={handleChange} name="name" value={state.name} />
         ) : (
           <div className="field-value">{user.name}</div>
         )}
@@ -34,6 +59,7 @@ function Settings(props) {
           <input
             type="password"
             onChange={handleChange}
+            name="password"
             value={state.password}
           />
         </div>
@@ -44,17 +70,19 @@ function Settings(props) {
           <input
             type="password"
             onChange={handleChange}
+            name="confirmPassword"
             value={state.confirmPassword}
           />
         </div>
       )}
       <div className="btn-grp">
         {state.editMode ? (
-          <button className="button save-btn">Save</button>
+          <button  className="button save-btn">Save</button>
         ) : (
-          <button className="button edit-btn">Edit Profile</button>
+          <button onClick={handleClickEdit}
+          className="button edit-btn">Edit Profile</button>
         )}
-        {state.editMode && <div className="go-back">Go Back</div>}
+        {state.editMode && <div onClick={handleClickEdit} className="go-back">Go Back</div>}
       </div>
     </div>
   );

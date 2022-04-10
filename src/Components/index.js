@@ -5,5 +5,5 @@ import Home from './Home';
 import page404 from './page404';
 import Login from './Login';
 import Signup from './Signup';
-
-export { PostList, Navbar, Home, page404, Login, Signup };
+import Settings from './Settings';
+export { PostList, Navbar, Home, page404, Login, Signup,Settings };
