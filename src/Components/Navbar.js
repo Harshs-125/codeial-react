@@ -2,8 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logoutUser } from '../Actions/auth';
+import user from './assets/user.png';
 function Navbar(props) {
-  function handleLogout(){
+  function handleLogout() {
     localStorage.removeItem('token');
     props.dispatch(logoutUser());
   }
@@ -27,26 +28,30 @@ function Navbar(props) {
       </div>
       <div className="right-nav">
         {props.auth.isLoggedIn && (
-          <div className="user">
-            <img
-              src="https://cdn-icons.flaticon.com/png/512/924/premium/924915.png?token=exp=1645509197~hmac=51659acae37605fe1e84f42c7dc138a1"
-              alt="user-dp"
-              id="user-dp"
-            />
-            <span>{props.auth.user.name}</span>
-          </div>
+          <Link to="/settings">
+            <div className="user">
+              <img src={user} alt="user-dp" id="user-dp" />
+              <span>{props.auth.user.name}</span>
+            </div>
+          </Link>
         )}
         <div className="nav-links">
           <ul>
-            {!props.auth.isLoggedIn&&<li>
-              <Link to="/login">Login</Link>
-            </li>}
-            {!props.auth.isLoggedIn&&<li>
-              <Link to="/signup">Signup</Link>
-            </li>}
-            {props.auth.isLoggedIn&&<li>
-              <button onClick={handleLogout}>Logout</button>
-            </li>}
+            {!props.auth.isLoggedIn && (
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+            )}
+            {!props.auth.isLoggedIn && (
+              <li>
+                <Link to="/signup">Signup</Link>
+              </li>
+            )}
+            {props.auth.isLoggedIn && (
+              <li>
+                <button onClick={handleLogout}>Logout</button>
+              </li>
+            )}
           </ul>
         </div>
       </div>

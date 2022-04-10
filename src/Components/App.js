@@ -10,8 +10,23 @@ import {
 } from 'react-router-dom';
 import { fetchPosts } from '../Actions/post';
 import { Home, Navbar, page404, Login, Signup } from './index';
-import { authenticateUser} from '../Actions/auth';
-
+import { authenticateUser } from '../Actions/auth';
+import { Redirect } from 'react-router-dom';
+function Setting(props) {
+  return <div>Settings</div>;
+}
+function PrivateRoute(props) {
+  const { isLoggedin, path, component: Component } = props;
+  console.log(props);
+  return (
+    <Route
+      path={path}
+      render={(props) => {
+        return isLoggedin ? <Setting /> : <Redirect to="/login" />;
+      }}
+    />
+  );
+}
 class App extends Component {
   componentDidMount() {
     this.props.dispatch(fetchPosts());
@@ -29,8 +44,8 @@ class App extends Component {
   }
 
   render() {
-    const { posts } = this.props;
-
+    const { posts, auth } = this.props;
+    
     return (
       <Router>
         <div>
@@ -57,6 +72,11 @@ class App extends Component {
                 return <Signup />;
               }}
             />
+            <PrivateRoute
+              path="/settings"
+              component={Setting}
+              isLoggedin={this.props.auth.isLoggedIn}
+            />
             <Route component={page404} />
           </Switch>
         </div>
@@ -67,6 +87,7 @@ class App extends Component {
 function mapStateToProps(state) {
   return {
     posts: state.posts,
+    auth: state.auth,
   };
 }
 
