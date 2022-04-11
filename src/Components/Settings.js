@@ -1,46 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { connect } from 'react-redux';
+import { editUser } from '../Actions/auth';
+import { clearAuthState } from '../Actions/auth';
 import user from './assets/user.png';
 
 function Settings(props) {
-  const { user } = props.auth;
+  useEffect(()=>()=>{
+    console.log("un");
+    props.dispatch(clearAuthState());
+  },[])
+  const { user,error } = props.auth;
   const [state, setState] = useState({
     name: props.auth.user.name,
-    password: '',
-    confirmPassword: '',
+    password: props.auth.user.password,
+    confirmPassword: props.auth.user.password,
     editMode: false,
   });
   function handleChange(event) {
-     const {name,value}=event.target;
-     setState(prevValue=>{
-       return {
-         ...prevValue,
-         [name]:value 
-       }
-     })
+    const { name, value } = event.target;
+    setState((prevValue) => {
+      return {
+        ...prevValue,
+        [name]: value,
+      };
+    });
   }
-  function handleClickEdit(event){
+  function handleClickEdit(event) {
     event.preventDefault();
-    setState(prevValue=>{
-      if(state.editMode)
-      {
-        return{
+    setState((prevValue) => {
+      if (state.editMode) {
+        return {
           ...prevValue,
-          editMode:false
-        }
+          editMode: false,
+        };
       }
       return {
         ...prevValue,
-        editMode:true
-      }
-    })
+        editMode: true,
+      };
+    });
   }
-  console.log(state);
+  function handleSubmit(event) {
+    event.preventDefault();
+    props.dispatch(editUser(state.name,state.password,state.confirmPassword,user._id));
+  }
   return (
     <div className="settings">
       <div className="img-container">
         <img src={user} alt="user-dp" id="user-dp" />
       </div>
+      {error&&<div className='alert error-dialog'>{error}</div>}
+      {error==false&& <div className='alert success-dialog'>successfully updated</div>}
       <div className="field">
         <div className="field-label">Email</div>
         <div className="field-value">{user.email}</div>
@@ -48,7 +58,12 @@ function Settings(props) {
       <div className="field">
         <div className="field-label">Name</div>
         {state.editMode ? (
-          <input type="text" onChange={handleChange} name="name" value={state.name} />
+          <input
+            type="text"
+            onChange={handleChange}
+            name="name"
+            value={state.name}
+          />
         ) : (
           <div className="field-value">{user.name}</div>
         )}
@@ -77,12 +92,19 @@ function Settings(props) {
       )}
       <div className="btn-grp">
         {state.editMode ? (
-          <button  className="button save-btn">Save</button>
+          <button onClick={handleSubmit} className="button save-btn">
+            Save
+          </button>
         ) : (
-          <button onClick={handleClickEdit}
-          className="button edit-btn">Edit Profile</button>
+          <button onClick={handleClickEdit} className="button edit-btn">
+            Edit Profile
+          </button>
         )}
-        {state.editMode && <div onClick={handleClickEdit} className="go-back">Go Back</div>}
+        {state.editMode && (
+          <div onClick={handleClickEdit} className="go-back">
+            Go Back
+          </div>
+        )}
       </div>
     </div>
   );
