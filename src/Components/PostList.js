@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
+import dp from './assets/user.png';
 class PostList extends Component {
   
   render() {
@@ -10,10 +11,10 @@ class PostList extends Component {
           {posts.map((post) => (
             <div className="post-wrapper" key={post._id}>
               <div className="post-header">
-                <Link to='/profile' >
+                <Link to={`/profile/${post.user._id}`}>
                 <div className="post-avatar">
                   <img
-                    src="https://cdn-icons.flaticon.com/png/512/924/premium/924915.png?token=exp=1645509197~hmac=51659acae37605fe1e84f42c7dc138a1"
+                  src={dp}
                     alt="profile-img"
                   />
                   <div>
