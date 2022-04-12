@@ -1,15 +1,21 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { editUser } from '../Actions/auth';
 import { clearAuthState } from '../Actions/auth';
-import user from './assets/user.png';
+import dp from './assets/user.png';
 
 function Settings(props) {
-  useEffect(()=>()=>{
-    console.log("un");
-    props.dispatch(clearAuthState());
-  },[])
-  const { user,error } = props.auth;
+  useEffect(
+    () => () => {
+      console.log('un');
+      props.dispatch(clearAuthState());
+    },
+    []
+  );
+  useEffect(() => {
+    console.log('gg');
+  }, []);
+  const { user, error } = props.auth;
   const [state, setState] = useState({
     name: props.auth.user.name,
     password: props.auth.user.password,
@@ -42,15 +48,19 @@ function Settings(props) {
   }
   function handleSubmit(event) {
     event.preventDefault();
-    props.dispatch(editUser(state.name,state.password,state.confirmPassword,user._id));
+    props.dispatch(
+      editUser(state.name, state.password, state.confirmPassword, user._id)
+    );
   }
   return (
     <div className="settings">
       <div className="img-container">
-        <img src={user} alt="user-dp" id="user-dp" />
+        <img src={dp} alt="user-dp" id="user-dp" />
       </div>
-      {error&&<div className='alert error-dialog'>{error}</div>}
-      {error==false&& <div className='alert success-dialog'>successfully updated</div>}
+      {error && <div className="alert error-dialog">{error}</div>}
+      {error == false && (
+        <div className="alert success-dialog">successfully updated</div>
+      )}
       <div className="field">
         <div className="field-label">Email</div>
         <div className="field-value">{user.email}</div>

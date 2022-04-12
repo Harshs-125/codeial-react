@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logoutUser } from '../Actions/auth';
-import user from './assets/user.png';
+import dp from './assets/user.png';
 function Navbar(props) {
   function handleLogout() {
     localStorage.removeItem('token');
@@ -28,9 +28,9 @@ function Navbar(props) {
       </div>
       <div className="right-nav">
         {props.auth.isLoggedIn && (
-          <Link to="/settings">
+          <Link to="/protected/settings">
             <div className="user">
-              <img src={user} alt="user-dp" id="user-dp" />
+              <img src={dp} alt="user-dp" id="user-dp" />
               <span>{props.auth.user.name}</span>
             </div>
           </Link>

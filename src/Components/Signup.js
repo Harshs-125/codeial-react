@@ -1,14 +1,17 @@
-import React, { useState,useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Navigate } from 'react-router-dom';
 import { signup, signupFailed } from '../Actions/signup';
 import { connect } from 'react-redux';
 import { clearAuthState } from '../Actions/auth';
 
 function Signup(props) {
-  useEffect(()=>()=>{
-    console.log("un");
-    props.dispatch(clearAuthState());
-  },[])
+  useEffect(
+    () => () => {
+      console.log('un');
+      props.dispatch(clearAuthState());
+    },
+    []
+  );
   const [userDetails, setUserDetails] = useState({
     name: '',
     email: '',
@@ -38,8 +41,8 @@ function Signup(props) {
       return;
     }
   }
-  if(props.auth.isLoggedIn){
-    return <Redirect to='/'/>
+  if (props.auth.isLoggedIn) {
+    return <Navigate to="/" />;
   }
   console.log(props);
   // const {error,inProgress} =props.signup;
@@ -91,10 +94,7 @@ function Signup(props) {
       </div>
       <div className="field">
         {props.signup.inProgress ? (
-          <button
-            onClick={handleSubmit}
-            disabled={props.signup.inProgress}
-          >
+          <button onClick={handleSubmit} disabled={props.signup.inProgress}>
             Signing in...{' '}
           </button>
         ) : (
@@ -109,7 +109,7 @@ function mapStateToProps(state) {
   console.log(state);
   return {
     signup: state.signup,
-    auth:state.auth
+    auth: state.auth,
   };
 }
 export default connect(mapStateToProps)(Signup);

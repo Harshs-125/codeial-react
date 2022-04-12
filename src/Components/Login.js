@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { clearAuthState, login } from '../Actions/auth';
 class Login extends Component {
@@ -12,7 +12,7 @@ class Login extends Component {
     this.state = {
       email: '',
       password: '',
-      ...props
+      ...props,
     };
   }
   componentWillUnmount() {
@@ -38,7 +38,7 @@ class Login extends Component {
   render() {
     const { error, inProgress } = this.props.auth;
     if (this.props.auth.isLoggedIn) {
-      return <Redirect to="/" />;
+      return <Navigate to="/" />;
     }
     return (
       <form className="login-form">

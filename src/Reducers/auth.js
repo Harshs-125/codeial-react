@@ -1,19 +1,27 @@
-  import {LOGIN_START,LOGIN_FAILED,LOGIN_SUCCESS,AUTHENTICATE_USER,LOG_OUT, CLEAR_AUTH_STATE,EDIT_USER_FAILED,EDIT_USER_SUCCESSFUL} from '../Actions/actionTypes';
+import {
+  LOGIN_START,
+  LOGIN_FAILED,
+  LOGIN_SUCCESS,
+  AUTHENTICATE_USER,
+  LOG_OUT,
+  CLEAR_AUTH_STATE,
+  EDIT_USER_FAILED,
+  EDIT_USER_SUCCESSFUL,
+} from '../Actions/actionTypes';
 const initialAuthState = {
   user: {},
   error: null,
-  isLoggedIn: false,
+  isLoggedIn: localStorage.getItem('token') != null,
   inProgress: false,
 };
 
-
 export default function auth(state = initialAuthState, action) {
   switch (action.type) {
-    case CLEAR_AUTH_STATE:{
-      return{
+    case CLEAR_AUTH_STATE: {
+      return {
         ...state,
-        error:null
-      }
+        error: null,
+      };
     }
     case LOGIN_START: {
       return {
@@ -26,43 +34,43 @@ export default function auth(state = initialAuthState, action) {
         ...state,
         user: action.user,
         isLoggedIn: true,
-        inProgress:false,
-        error: null
+        inProgress: false,
+        error: null,
       };
     }
-    case LOGIN_FAILED:{
-        return{
-            ...state,
-            inProgress:false,
-            error:action.error,
-        }
-    }
-    case AUTHENTICATE_USER:{
+    case LOGIN_FAILED: {
       return {
         ...state,
-        user:action.user,
-        isLoggedIn:true
-      }
+        inProgress: false,
+        error: action.error,
+      };
     }
-    case LOG_OUT:{
+    case AUTHENTICATE_USER: {
       return {
         ...state,
-        user:{},
-        isLoggedIn:false,
-      }
+        user: action.user,
+        isLoggedIn: true,
+      };
     }
-    case EDIT_USER_FAILED:{
+    case LOG_OUT: {
       return {
         ...state,
-        error:action.error
-      }
+        user: {},
+        isLoggedIn: false,
+      };
     }
-    case EDIT_USER_SUCCESSFUL:{
+    case EDIT_USER_FAILED: {
       return {
         ...state,
-        user:action.user,
-        error:false
-      }
+        error: action.error,
+      };
+    }
+    case EDIT_USER_SUCCESSFUL: {
+      return {
+        ...state,
+        user: action.user,
+        error: false,
+      };
     }
     default: {
       return state;
