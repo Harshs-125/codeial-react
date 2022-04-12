@@ -7,13 +7,11 @@ import dp from './assets/user.png';
 function Settings(props) {
   useEffect(
     () => () => {
-      console.log('un');
       props.dispatch(clearAuthState());
     },
     []
   );
   useEffect(() => {
-    console.log('gg');
   }, []);
   const { user, error } = props.auth;
   const [state, setState] = useState({

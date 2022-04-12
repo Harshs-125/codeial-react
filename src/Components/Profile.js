@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { useParams, withRouter } from 'react-router-dom';
+import { useLocation,useSearchParams } from 'react-router-dom';
 import dp from './assets/user.png';
 function Profile(props) {
-  console.log(props);
+  let {userid}=useParams();
+  console.log(userid);
   return (
     <div className="settings">
       <div className="img-container">
@@ -22,6 +23,6 @@ function Profile(props) {
       </div>
     </div>
   );
-};
+}
 
 export default Profile;

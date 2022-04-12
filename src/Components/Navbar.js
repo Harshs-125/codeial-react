@@ -28,7 +28,7 @@ function Navbar(props) {
       </div>
       <div className="right-nav">
         {props.auth.isLoggedIn && (
-          <Link to="/protected/settings">
+          <Link to="/settings">
             <div className="user">
               <img src={dp} alt="user-dp" id="user-dp" />
               <span>{props.auth.user.name}</span>

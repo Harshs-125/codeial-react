@@ -14,7 +14,7 @@ import { fetchPosts } from '../Actions/post';
 import {
   Home,
   Navbar,
-  page404,
+  Page404,
   Login,
   Signup,
   Settings,
@@ -22,10 +22,13 @@ import {
 } from './index';
 import { authenticateUser } from '../Actions/auth';
 
-function PrivateRoute(props) {
-  if (props.isLoggedin) return <Outlet />;
-  return <Navigate to="/login" />;
-}
+function PrivateRoute({isLoggedin ,children}){
+  return isLoggedin?(
+    children
+  ):(
+    <Navigate to="/login"/>
+  );
+};
 class App extends Component {
   componentDidMount() {
     this.props.dispatch(fetchPosts());
@@ -58,13 +61,13 @@ class App extends Component {
             />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/protected"
-              element={<PrivateRoute isLoggedin={this.props.auth.isLoggedIn} />}
-            >
-              <Route path="/protected/settings" element={<Settings />} />
-              <Route path="/protected/profile" element={<Profile />} />
-            </Route>
-            <Route element={<page404 />} />
+            <Route path="/settings" element={<PrivateRoute isLoggedin={auth.isLoggedIn}>
+              <Settings />
+            </PrivateRoute>} />
+            <Route path="/profile/:userid" element={<PrivateRoute isLoggedin={auth.isLoggedIn}>
+              <Profile />
+            </PrivateRoute>} />
+            <Route path="*" element={<Page404 />} />
           </Routes>
         </div>
       </Router>
