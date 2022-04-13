@@ -23,8 +23,8 @@ function Profile(props) {
   {
     isUserAFriend=true;
   }
-  async function handleAddFriendClick()
-  {
+  async function handleAddFriendClick(e)
+  {e.preventDefault();
     const url=`http://localhost:8000/api/v1/friends/add/${params.userid}`;
     const options={
       method: 'post',
@@ -55,8 +55,8 @@ function Profile(props) {
       return ;
     }
   }
-  async function handleRemoveFriendClick()
-  {
+  async function handleRemoveFriendClick(e)
+  {e.preventDefault();
     const url=`http://localhost:8000/api/v1/friends/remove/${params.userid}`;
     const options={
       method: 'post',
