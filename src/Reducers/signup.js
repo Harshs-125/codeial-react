@@ -26,7 +26,6 @@ export default function signup(state = initialSignupState, action) {
       };
     }
     case SIGNUP_SUCCESS: {
-      debugger;
       return {
         ...state,
         inProgress: false,

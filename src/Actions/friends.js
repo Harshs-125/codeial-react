@@ -1,4 +1,4 @@
-import { UPDATE_FRIEND_LIST } from "./actionTypes";
+import { UPDATE_FRIEND_LIST,ADD_FRIEND, REMOVE_FRIEND } from "./actionTypes";
 
 export function fetchFriendList(userid)
 { 
@@ -24,5 +24,19 @@ export function updateFriendList(friends)
     return {
         type:UPDATE_FRIEND_LIST,
         friends
+    }
+}
+export function addFriend(friend)
+{
+    return {
+        type:ADD_FRIEND,
+        friend
+    }
+}
+export function removeFriend(userId)
+{
+    return {
+        type:REMOVE_FRIEND,
+        userId,
     }
 }

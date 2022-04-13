@@ -1,19 +1,91 @@
-import { toHaveAccessibleDescription } from '@testing-library/jest-dom/dist/matchers';
-import React, { useEffect } from 'react';
+import React, { useEffect ,useState} from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import dp from './assets/user.png';
 import { fetchUserProfile } from '../Actions/profile';
+import {addFriend,removeFriend} from '../Actions/friends';
+
 
 function Profile(props) {
   const params = useParams();
-  console.log(params);
+  const [friendState,setFriendState]=useState({
+    success:null,
+    error:null,
+    successMessage:null
+  })
   useEffect(()=>{
     props.dispatch(fetchUserProfile(params.userid));
-  },[])
-  if(props.profile.inProgress)
+  },[params.userid])
+  let userid=params.userid;
+  let index=props.friends.map((friend)=>friend.to._id).indexOf(userid);
+  let isUserAFriend=false;
+  if(index!==-1)
   {
-    return <h1>Loading...</h1>
+    isUserAFriend=true;
+  }
+  async function handleAddFriendClick()
+  {
+    const url=`http://localhost:8000/api/v1/friends/add/${params.userid}`;
+    const options={
+      method: 'post',
+      headers: {
+        Mode: 'no-cors',
+        Accept: 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization:localStorage.getItem('token')
+      },
+    }
+    const response=await fetch(url,options);
+    const data=await response.json();
+    console.log(data);
+    if(data.success)
+    {
+      setFriendState({
+        success:true,
+        successMessage:"Added friend successfully"
+      })
+      props.dispatch(addFriend(data.data.friendship));
+      return ;
+    }
+    else{
+      setFriendState({
+        success:null,
+        error:data.message
+      })
+      return ;
+    }
+  }
+  async function handleRemoveFriendClick()
+  {
+    const url=`http://localhost:8000/api/v1/friends/remove/${params.userid}`;
+    const options={
+      method: 'post',
+      headers: {
+        Mode: 'no-cors',
+        Accept: 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization:localStorage.getItem('token')
+      },
+    }
+    const response=await fetch(url,options);
+    const data=response.json();
+    if(data.success)
+    {
+      setFriendState({
+        success:true,
+        successMessage:"Removed friends Successfully"
+      });
+      props.dispatch(removeFriend(userid));
+      return ;
+    }
+    else
+    {
+      setFriendState({
+        success:null,
+        error:data.message
+      })
+      return ;
+    }
   }
   return (
     
@@ -30,16 +102,21 @@ function Profile(props) {
         <div className="field=value">{props.profile.user.email}</div>
       </div>
       <div className="btn-grp">
-        <button className="button save-btn">Add friend</button>
-        <button className="button save-btn">Remove friend</button>
+        {!isUserAFriend ?(
+          <button className='button save-btn' onClick={handleAddFriendClick}>Add Friend</button>
+        ):(<button className='button save-btn'
+        onClick={handleRemoveFriendClick}>RemoveFriend</button>)}
       </div>
+      {friendState.success && <div className='alert success-dialog'>{friendState.successMessage}</div>}
+      {friendState.error && <div className='alert error-dialog'>{friendState.error}</div>}
     </div>
   );
 }
-function mapStateToProps({profile})
+function mapStateToProps(state)
 {
   return {
-    profile
+    profile:state.profile,
+    friends:state.friends
   }
 }
 export default connect(mapStateToProps)(Profile);

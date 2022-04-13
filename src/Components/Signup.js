@@ -7,11 +7,15 @@ import { clearAuthState } from '../Actions/auth';
 function Signup(props) {
   useEffect(
     () => () => {
-      console.log('un');
       props.dispatch(clearAuthState());
     },
     []
   );
+  useEffect(()=>{
+    if (props.auth.isLoggedIn) {
+      return <Navigate to="/" />;
+    }
+  })
   const [userDetails, setUserDetails] = useState({
     name: '',
     email: '',
@@ -41,10 +45,6 @@ function Signup(props) {
       return;
     }
   }
-  if (props.auth.isLoggedIn) {
-    return <Navigate to="/" />;
-  }
-  console.log(props);
   // const {error,inProgress} =props.signup;
   return (
     <form className="login-form">
