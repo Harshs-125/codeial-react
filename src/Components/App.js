@@ -21,6 +21,7 @@ import {
   Profile,
 } from './index';
 import { authenticateUser } from '../Actions/auth';
+import {fetchFriendList} from '../Actions/friends';
 
 function PrivateRoute({isLoggedin ,children}){
   return isLoggedin?(
@@ -42,11 +43,12 @@ class App extends Component {
           name: user.name,
         })
       );
+      this.props.dispatch(fetchFriendList());
     }
   }
 
   render() {
-    const { posts, auth } = this.props;
+    const { posts, auth,friends } = this.props;
 
     return (
       <Router>
@@ -57,7 +59,7 @@ class App extends Component {
             <Route
               exact={true}
               path="/"
-              element={<Home {...this.props} posts={posts} />}
+              element={<Home {...this.props} posts={posts} isLoggedIn={auth.isLoggedIn} friends={friends}/>}
             />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />

@@ -106,7 +106,7 @@ function Signup(props) {
 }
 
 function mapStateToProps(state) {
-  console.log(state);
+  
   return {
     signup: state.signup,
     auth: state.auth,
