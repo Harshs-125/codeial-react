@@ -1,4 +1,3 @@
-import { bindActionCreators } from 'redux';
 import {
   UPDATE_POSTS,
   ADD_POST,
@@ -39,7 +38,6 @@ export default function post(state = [], action) {
       return newPosts;
     }
     case UPDATE_POST_UNLIKE: {
-      console.log(state.posts);
       const newPosts = state.map((post) => {
         if (post._id === action.postId) {
           let newLikes = post.likes.filter((like) => {

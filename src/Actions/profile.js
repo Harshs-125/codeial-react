@@ -38,7 +38,6 @@ export function fetchUserProfile(userId)
         })
         .then((response) => response.json())
       .then((data) => {
-        console.log('data', data);
         if (data.success) {
           //dispatch an action to save user
           return dispatch(userProfileSuccess(data.data.user));

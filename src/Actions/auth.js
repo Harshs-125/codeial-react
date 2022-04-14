@@ -29,7 +29,6 @@ export function loginSuccess(user) {
 }
 
 export function login(email, password) {
-  console.log(email + ' ' + password);
   return (dispatch) => {
     dispatch(startLogin);
     const url = 'http://localhost:8000/api/v1/users/createsession';
@@ -45,7 +44,6 @@ export function login(email, password) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('data', data);
         if (data.success) {
           //dispatch an action to save user
 
@@ -109,8 +107,8 @@ export function editUser(name, password, confirmPassword, userId) {
             localStorage.setItem('token', data.data.token);
           }
           return dispatch(editUserSuccessful(data.data.user));
-        }else{
-        return dispatch(editUserFailed(data.message));
+        } else {
+          return dispatch(editUserFailed(data.message));
         }
       });
   };

@@ -46,7 +46,6 @@ export function createPost(content) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         if (data.success) {
           dispatch(addPost(data.data.post));
         }
@@ -66,9 +65,7 @@ export function createComment(content, postId) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         if (data.success) {
-          console.log(data.data);
           dispatch(addComment(data.data.comment, postId));
         }
       });
@@ -94,7 +91,6 @@ export function addLike(id, likeType, userId) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('Like data', data.data);
         if (data.success) {
           if (data.data.deleted) {
             dispatch(unlikeFromStore(id, userId));

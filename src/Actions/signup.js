@@ -25,7 +25,6 @@ export function authenticateUser(user){
   };
 }
 export function signup(name, email, password) {
-  console.log(email + ' ' + name +' '+password);
   return (dispatch) => {
     dispatch(startSignup);
     const url = 'http://localhost:8000/api/v1/users/signup';
@@ -40,7 +39,6 @@ export function signup(name, email, password) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('data', data);
         if (data.success) {
             localStorage.setItem('token',data.data.token);  
           dispatch(signupSuccess(data.data.user));

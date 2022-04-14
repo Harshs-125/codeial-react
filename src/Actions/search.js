@@ -10,9 +10,7 @@ export function searchUsers(searchText) {
     })
       .then((response) => response.json())
       .then((data) => {
-          console.log(data);
         if (data.success) {
-            console.log(data.users);
           dispatch(searchResultSuccess(data.users));
         } else {
           dispatch(searchResultSuccess([]));

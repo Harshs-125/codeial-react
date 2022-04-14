@@ -11,11 +11,11 @@ function Signup(props) {
     },
     []
   );
-  useEffect(()=>{
+  useEffect(() => {
     if (props.auth.isLoggedIn) {
       return <Navigate to="/" />;
     }
-  })
+  });
   const [userDetails, setUserDetails] = useState({
     name: '',
     email: '',
@@ -35,9 +35,7 @@ function Signup(props) {
     event.preventDefault();
 
     const { name, email, password, confirm_password } = userDetails;
-    console.log(name + ' ' + email + ' ' + password + ' ' + confirm_password);
     if (name && email && password === confirm_password) {
-      console.log('signup possible');
       props.dispatch(signup(name, email, password));
       return;
     } else {
@@ -46,6 +44,9 @@ function Signup(props) {
     }
   }
   // const {error,inProgress} =props.signup;
+  if (props.signup.isSignedIn) {
+    return <Navigate to="/" />;
+  }
   return (
     <form className="login-form">
       <span className="login-signup-header">Signup</span>
@@ -106,7 +107,6 @@ function Signup(props) {
 }
 
 function mapStateToProps(state) {
-  
   return {
     signup: state.signup,
     auth: state.auth,

@@ -16,7 +16,6 @@ function Navbar(props) {
   }
   const { auth, results } = props;
   const users = results.results;
-  console.log('e', users);
   return (
     <nav className="nav">
       <div className="left-nav">
@@ -27,26 +26,30 @@ function Navbar(props) {
           />
         </Link>
       </div>
-      <div className="search-container">
-        <img className="search-icon " src={search} alt="search-icn" />
-        <input placeholder="Search" onChange={handleChange} />
-        {users.length > 0 && (
-          <div className="search-results">
-            <ul>
-              {users.map((user) => {
-                return (
-                  <li className="search-results-row" key={user._id}>
-                    <Link to={`/profile/${user._id}`}>
-                      <img src={dp} alt="user-dp" />
-                      <span>{user.name}</span>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
+      {(props.auth.isLoggedIn||props.signup.isSignedIn) && (
+        <>
+          <div className="search-container">
+            <img className="search-icon " src={search} alt="search-icn" />
+            <input placeholder="Search" onChange={handleChange} />
+            {users.length > 0 && (
+              <div className="search-results">
+                <ul>
+                  {users.map((user) => {
+                    return (
+                      <li className="search-results-row" key={user._id}>
+                        <Link to={`/profile/${user._id}`}>
+                          <img src={dp} alt="user-dp" />
+                          <span>{user.name}</span>
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            )}
           </div>
-        )}
-      </div>
+        </>
+      )}
       <div className="right-nav">
         {props.auth.isLoggedIn && (
           <Link to="/settings">
@@ -82,6 +85,7 @@ function Navbar(props) {
 function mapStateToProps(state) {
   return {
     auth: state.auth,
+    signup:state.signup,
     results: state.search,
   };
 }
