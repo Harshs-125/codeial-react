@@ -1,23 +1,28 @@
-import React ,{useState} from 'react';
+import React, { useState } from 'react';
 
 import { Link } from 'react-router-dom';
-import dp from "../Components/assets/user.png";
-import { createComment } from '../Actions/post';
-import {Comment} from './';
+import dp from '../Components/assets/user.png';
+import { addLike, createComment } from '../Actions/post';
+import { Comment } from './';
 import { connect } from 'react-redux';
+import liked from './assets/liked.png';
+import like from './assets/like.png';
 function Post(props) {
-    const {post}=props;
-    const [comment,setComment]=useState('');
-    const handleChange=(e)=>{
-     setComment(e.target.value);
+  const { post, user } = props;
+  const [comment, setComment] = useState('');
+  const isPostLikedByUser = post.likes.includes(user._id);
+  const handleChange = (e) => {
+    setComment(e.target.value);
+  };
+  const handleAddComment = (e) => {
+    if (e.key === 'Enter') {
+      props.dispatch(createComment(comment, post._id));
+      setComment('');
     }
-    const handleAddComment=(e)=>{
-        if(e.key==='Enter')
-        {
-            props.dispatch(createComment(comment,post._id))
-            setComment('');
-        }
-    }
+  };
+  const handlePostLike = (e) => {
+    props.dispatch(addLike(post._id, 'Post', user._id));
+  };
   return (
     <div className="post-wrapper" key={post._id} post={post}>
       <div className="post-header">
@@ -32,13 +37,14 @@ function Post(props) {
         </Link>
         <div className="post-content">{post.content}</div>
         <div className="post-actions">
-          <div className="post-like">
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/1077/1077035.png"
-              alt="like-btn"
-            />
+          <button className="post-like no-btn" onClick={handlePostLike}>
+            {isPostLikedByUser ? (
+              <img src={liked} alt="like-btn" />
+            ) : (
+              <img src={like} alt="like-btn" />
+            )}
             <span>{post.likes.length}</span>
-          </div>
+          </button>
           <div className="post-comments-icon">
             <img
               src="https://cdn-icons-png.flaticon.com/512/2462/2462719.png"
@@ -48,23 +54,31 @@ function Post(props) {
           </div>
         </div>
         <div className="post-comment-box">
-          <input placeholder="Write a Comment" onChange={handleChange} onKeyPress={handleAddComment} value={comment}></input>
+          <input
+            placeholder="Write a Comment"
+            onChange={handleChange}
+            onKeyPress={handleAddComment}
+            value={comment}
+          ></input>
           <div className="post-comments-list">
-            {
-             post.comments.map((comment)=>{
-                 return <Comment comment={comment} key={comment._id} postId={post._id}/>
-             })
-            }
+            {post.comments.map((comment) => {
+              return (
+                <Comment
+                  comment={comment}
+                  key={comment._id}
+                  postId={post._id}
+                />
+              );
+            })}
           </div>
         </div>
       </div>
     </div>
   );
 }
-function mapStateToProps({auth})
-{
-    return {
-        user:auth.user,
-    }
+function mapStateToProps({ auth }) {
+  return {
+    user: auth.user,
+  };
 }
 export default connect(mapStateToProps)(Post);
