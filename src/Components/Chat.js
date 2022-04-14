@@ -61,7 +61,7 @@ function Chat(props) {
       <div className="chat-header">
         Chat
         <img
-          src={down}
+          src={windowDetails ? down : up}
           onClick={(e) => {
             e.preventDefault();
             setWindow(!windowDetails);
@@ -70,41 +70,39 @@ function Chat(props) {
           height={17}
         />
       </div>
-      {windowDetails && (
-        <>
-          <div className="chat-messages">
-            {chatDetails?.messages?.map((message) => {
-              return (
-                <div
-                  className={
-                    message.self
-                      ? 'chat-bubble self-chat'
-                      : 'chat-bubble other-chat'
-                  }
-                >
-                  <div style={{ fontSize: '9px', fontWeight: '700' }}>
-                    {message.useremail}
-                  </div>
-                  {message?.content}
+      <div className="gg" style={{ height: windowDetails ? '357px' : '0px' }}>
+        <div className="chat-messages">
+          {chatDetails?.messages?.map((message) => {
+            return (
+              <div
+                className={
+                  message.self
+                    ? 'chat-bubble self-chat'
+                    : 'chat-bubble other-chat'
+                }
+              >
+                <div style={{ fontSize: '9px', fontWeight: '700' }}>
+                  {message.useremail}
                 </div>
-              );
-            })}
-          </div>
-          <div className="chat-footer">
-            <input
-              type="text"
-              value={chatDetails.typedMessage}
-              onChange={(e) => {
-                setChatDetails({
-                  ...chatDetails,
-                  typedMessage: e.target.value,
-                });
-              }}
-            />
-            <button onClick={handleSubmit}>Send</button>
-          </div>
-        </>
-      )}
+                {message?.content}
+              </div>
+            );
+          })}
+        </div>
+        <div className="chat-footer">
+          <input
+            type="text"
+            value={chatDetails.typedMessage}
+            onChange={(e) => {
+              setChatDetails({
+                ...chatDetails,
+                typedMessage: e.target.value,
+              });
+            }}
+          />
+          <button onClick={handleSubmit}>Send</button>
+        </div>
+      </div>
     </div>
   );
 }

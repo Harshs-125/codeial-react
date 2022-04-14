@@ -489,6 +489,10 @@ nav .nav-links ul li:hover {
   border: 1px solid #e0e0e0;
   box-sizing: border-box;
   border-radius: 4px;
+  width:50%;
+  margin-left: 50px;
+  margin-top:50px;
+  margin-bottom:50px;
 }
 .create-post > div {
   padding: 10px;

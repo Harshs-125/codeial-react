@@ -14,7 +14,7 @@ function Navbar(props) {
     const searchText = e.target.value;
     props.dispatch(searchUsers(searchText));
   }
-  const { auth, results } = props;
+  const { auth, results, signup } = props;
   const users = results.results;
   return (
     <nav className="nav">
@@ -26,7 +26,7 @@ function Navbar(props) {
           />
         </Link>
       </div>
-      {(props.auth.isLoggedIn||props.signup.isSignedIn) && (
+      {(props.auth.isLoggedIn || props.signup.isSignedIn) && (
         <>
           <div className="search-container">
             <img className="search-icon " src={search} alt="search-icn" />
@@ -85,7 +85,7 @@ function Navbar(props) {
 function mapStateToProps(state) {
   return {
     auth: state.auth,
-    signup:state.signup,
+    signup: state.signup,
     results: state.search,
   };
 }

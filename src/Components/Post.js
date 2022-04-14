@@ -7,6 +7,8 @@ import { Comment } from './';
 import { connect } from 'react-redux';
 import liked from './assets/liked.png';
 import like from './assets/like.png';
+import { toDate } from '../helper/utils';
+
 function Post(props) {
   const { post, user } = props;
   const [comment, setComment] = useState('');
@@ -31,7 +33,7 @@ function Post(props) {
             <img src={dp} alt="profile-img" />
             <div>
               <span className="post-author">{post.user.name}</span>
-              <span className="post-time">{post.createdAt}</span>
+              <span className="post-time">{toDate(new Date(post.createdAt))}</span>
             </div>
           </div>
         </Link>
