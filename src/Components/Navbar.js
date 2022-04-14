@@ -3,11 +3,20 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logoutUser } from '../Actions/auth';
 import dp from './assets/user.png';
+import search from './assets/search.png';
+import { searchUsers } from '../Actions/search';
 function Navbar(props) {
   function handleLogout() {
     localStorage.removeItem('token');
     props.dispatch(logoutUser());
   }
+  function handleChange(e) {
+    const searchText = e.target.value;
+    props.dispatch(searchUsers(searchText));
+  }
+  const { auth, results } = props;
+  const users = results.results;
+  console.log('e', users);
   return (
     <nav className="nav">
       <div className="left-nav">
@@ -19,12 +28,24 @@ function Navbar(props) {
         </Link>
       </div>
       <div className="search-container">
-        <img
-          className="search-icon "
-          src="https://cdn-icons.flaticon.com/png/512/2801/premium/2801881.png?token=exp=1645538071~hmac=ebc8094db75dcbcaebddc7b9cb698216"
-          alt="search-icn"
-        />
-        <input placeholder="Search" />
+        <img className="search-icon " src={search} alt="search-icn" />
+        <input placeholder="Search" onChange={handleChange} />
+        {users.length > 0 && (
+          <div className="search-results">
+            <ul>
+              {users.map((user) => {
+                return (
+                  <li className="search-results-row" key={user._id}>
+                    <Link to={`/profile/${user._id}`}>
+                      <img src={dp} alt="user-dp" />
+                      <span>{user.name}</span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        )}
       </div>
       <div className="right-nav">
         {props.auth.isLoggedIn && (
@@ -61,6 +82,7 @@ function Navbar(props) {
 function mapStateToProps(state) {
   return {
     auth: state.auth,
+    results: state.search,
   };
 }
 export default connect(mapStateToProps)(Navbar);
