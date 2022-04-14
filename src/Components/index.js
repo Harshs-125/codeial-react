@@ -9,6 +9,9 @@ import Settings from './Settings';
 import Profile from './Profile';
 import FriendListItem from './FriendListItem';
 import FriendList from './FriendList';
+import CreatePost from './CreatePost';
+import Post from './Post';
+import Comment from './Comment';
 export {
   PostList,
   Navbar,
@@ -20,4 +23,7 @@ export {
   Profile,
   FriendList,
   FriendListItem,
+  CreatePost,
+  Post,
+  Comment,
 };

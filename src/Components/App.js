@@ -19,6 +19,7 @@ import {
   Signup,
   Settings,
   Profile,
+  CreatePost
 } from './index';
 import { authenticateUser } from '../Actions/auth';
 import {fetchFriendList} from '../Actions/friends';
@@ -54,6 +55,7 @@ class App extends Component {
       <Router>
         <div>
           <Navbar />
+          {auth.isLoggedIn&&<CreatePost />}
           <Routes>
             {/* <PostList posts={posts} /> */}
             <Route
