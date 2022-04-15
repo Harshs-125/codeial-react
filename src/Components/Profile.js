@@ -29,7 +29,7 @@ function Profile(props) {
   }, [props.friends]);
   async function handleAddFriendClick(e) {
     
-    const url = `http://localhost:8000/api/v1/friends/add/${params.userid}`;
+    const url = `https://api-codeial.herokuapp.com/api/v1/friends/add/${params.userid}`;
     const options = {
       method: 'post',
       headers: {
@@ -57,7 +57,7 @@ function Profile(props) {
     }
   }
   async function handleRemoveFriendClick(e) {
-    const url = `http://localhost:8000/api/v1/friends/remove/${params.userid}`;
+    const url = `https://api-codeial.herokuapp.com/api/v1/friends/remove/${params.userid}`;
     const aoptions = {
       method: 'post',
       headers: {
