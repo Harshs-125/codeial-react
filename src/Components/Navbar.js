@@ -35,14 +35,16 @@ function Navbar(props) {
               <div className="search-results">
                 <ul>
                   {users.map((user) => {
-                    return (
-                      <li className="search-results-row" key={user._id}>
-                        <Link to={`/profile/${user._id}`}>
-                          <img src={dp} alt="user-dp" />
-                          <span>{user.name}</span>
-                        </Link>
-                      </li>
-                    );
+                    if (user._id !== props.auth.user._id)
+                      return (
+                        <li className="search-results-row" key={user._id}>
+                          <Link to={`/profile/${user._id}`}>
+                            <img src={dp} alt="user-dp" />
+                            <span>{user.name}</span>
+                          </Link>
+                        </li>
+                      );
+                    return null;
                   })}
                 </ul>
               </div>

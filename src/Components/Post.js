@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Link } from 'react-router-dom';
 import dp from '../Components/assets/user.png';
@@ -12,7 +12,9 @@ import { toDate } from '../helper/utils';
 function Post(props) {
   const { post, user } = props;
   const [comment, setComment] = useState('');
-  const isPostLikedByUser = post.likes.includes(user._id);
+  const [isPostLikedByUser, setIsPostLikedByUser] = useState(false);
+  console.log(post.likes);
+  console.log(user._id);
   const handleChange = (e) => {
     setComment(e.target.value);
   };
@@ -22,9 +24,14 @@ function Post(props) {
       setComment('');
     }
   };
-  const handlePostLike = (e) => {
+  const handlePostLike = () => {
     props.dispatch(addLike(post._id, 'Post', user._id));
   };
+  useEffect(() => {
+    setIsPostLikedByUser(
+      post.likes.filter((like) => like.user === user._id).length > 0
+    );
+  }, [post]);
   return (
     <div className="post-wrapper" key={post._id} post={post}>
       <div className="post-header">
@@ -33,7 +40,9 @@ function Post(props) {
             <img src={dp} alt="profile-img" />
             <div>
               <span className="post-author">{post.user.name}</span>
-              <span className="post-time">{toDate(new Date(post.createdAt))}</span>
+              <span className="post-time">
+                {toDate(new Date(post.createdAt))}
+              </span>
             </div>
           </div>
         </Link>

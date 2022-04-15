@@ -93,25 +93,27 @@ export function addLike(id, likeType, userId) {
       .then((data) => {
         if (data.success) {
           if (data.data.deleted) {
-            dispatch(unlikeFromStore(id, userId));
+            dispatch(unlikeFromStore(id, userId, data.data.like));
           } else {
-            dispatch(addLikeToStore(id, userId));
+            dispatch(addLikeToStore(id, userId, data.data.like));
           }
         }
       });
   };
 }
-export function addLikeToStore(postId, userId) {
+export function addLikeToStore(postId, userId, like) {
   return {
     type: UPDATE_POST_LIKE,
     postId,
     userId,
+    like,
   };
 }
-export function unlikeFromStore(postId, userId) {
+export function unlikeFromStore(postId, userId, like) {
   return {
     type: UPDATE_POST_UNLIKE,
     postId,
     userId,
+    like,
   };
 }

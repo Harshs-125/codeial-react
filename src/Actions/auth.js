@@ -91,7 +91,7 @@ export function editUser(name, password, confirmPassword, userId) {
       method: 'post',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: localStorage.getItem('token'),
       },
       body: getFormBody({
         name,

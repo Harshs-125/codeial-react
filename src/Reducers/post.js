@@ -30,7 +30,7 @@ export default function post(state = [], action) {
         if (post._id === action.postId) {
           return {
             ...post,
-            likes: [...post.likes, action.userId],
+            likes: [...post.likes, { user: action.userId }],
           };
         }
         return post;
@@ -41,7 +41,7 @@ export default function post(state = [], action) {
       const newPosts = state.map((post) => {
         if (post._id === action.postId) {
           let newLikes = post.likes.filter((like) => {
-            if (like !== action.userId) {
+            if (like.user !== action.userId) {
               return like;
             }
           });

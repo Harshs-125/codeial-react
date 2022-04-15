@@ -55,7 +55,7 @@ class App extends Component {
       <Router>
         <div>
           <Navbar />
-          {auth.isLoggedIn&&<CreatePost />}
+          
           <Routes>
             {/* <PostList posts={posts} /> */}
             <Route

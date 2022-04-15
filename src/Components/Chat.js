@@ -13,7 +13,7 @@ function Chat(props) {
   const handleClick = (e) => {
     e.preventDefault();
   };
-  const socket = io.connect('http://localhost:5000');
+  const socket = io.connect('http://localhost:  process.env.PORT');
   const userEmail = props.user.email;
   if (userEmail) {
     setUpConnections();
