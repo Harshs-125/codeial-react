@@ -27,7 +27,7 @@ export function fetchUserProfile(userId)
 {
     return (dispatch)=>{
         dispatch(startUserProfileFetch);
-        const url=`http://localhost:8000/api/v1/users/${userId}`;
+        const url=`https://api-codeial.herokuapp.com/api/v1/users/${userId}`;
         fetch(url,{
             method: 'get',
             headers: {

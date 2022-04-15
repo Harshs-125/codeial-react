@@ -27,7 +27,7 @@ export function authenticateUser(user){
 export function signup(name, email, password) {
   return (dispatch) => {
     dispatch(startSignup);
-    const url = 'http://localhost:8000/api/v1/users/signup';
+    const url = 'https://api-codeial.herokuapp.com/api/v1/users/signup';
     fetch(url, {
       method: 'post',
       headers: {

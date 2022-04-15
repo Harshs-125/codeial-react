@@ -2,7 +2,7 @@ import { UPDATE_FRIEND_LIST, ADD_FRIEND, REMOVE_FRIEND } from './actionTypes';
 
 export function fetchFriendList(userid) {
   return (dispatch) => {
-    const url = `http://localhost:8000/api/v1/friends/getfriends`;
+    const url = `https://api-codeial.herokuapp.com/api/v1/friends/getfriends`;
     fetch(url, {
       method: 'get',
       headers: {

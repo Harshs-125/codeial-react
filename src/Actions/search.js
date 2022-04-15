@@ -2,7 +2,7 @@ import { FETCH_SEARCH_SUCCESS_RESULT } from './actionTypes';
 
 export function searchUsers(searchText) {
   return (dispatch) => {
-    const url = `http://localhost:8000/api/v1/users/search?text=${searchText}`;
+    const url =   `https://api-codeial.herokuapp.com/api/v1/users/search?text=${searchText}`;
     fetch(url, {
       headers: {
         Authorization: localStorage.getItem('token'),

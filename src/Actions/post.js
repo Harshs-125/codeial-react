@@ -10,7 +10,7 @@ import { getFormBody } from '../helper/utils';
 
 export function fetchPosts() {
   return (dispatch) => {
-    const url = APIurls.fetchPosts();
+    const url = "https://api-codeial.herokuapp.com/api/v1/posts";
     fetch(url)
       .then((response) => {
         return response.json();
@@ -35,7 +35,7 @@ export function addPost(post) {
 }
 export function createPost(content) {
   return (dispatch) => {
-    const url = 'http://localhost:8000/api/v1/posts/add';
+    const url = 'https://api-codeial.herokuapp.com/api/v1/posts/add';
     fetch(url, {
       method: 'POST',
       headers: {
@@ -54,7 +54,7 @@ export function createPost(content) {
 }
 export function createComment(content, postId) {
   return (dispatch) => {
-    const url = 'http://localhost:8000/api/v1/posts/addcomment';
+    const url = 'https://api-codeial.herokuapp.com/api/v1/posts/addcomment';
     fetch(url, {
       method: 'POST',
       headers: {
@@ -81,7 +81,7 @@ export function addComment(comment, postId) {
 }
 export function addLike(id, likeType, userId) {
   return (dispatch) => {
-    const url = `http://localhost:8000/api/v1/posts/likes/toggle?likeable_id=${id}&likeable_type=${likeType}`;
+    const url = `https://api-codeial.herokuapp.com/api/v1/posts/likes/toggle?likeable_id=${id}&likeable_type=${likeType}`;
     fetch(url, {
       method: 'POST',
       headers: {

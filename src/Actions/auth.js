@@ -31,7 +31,7 @@ export function loginSuccess(user) {
 export function login(email, password) {
   return (dispatch) => {
     dispatch(startLogin);
-    const url = 'http://localhost:8000/api/v1/users/createsession';
+    const url = 'https://api-codeial.herokuapp.com/api/v1/users/createsession';
     fetch(url, {
       method: 'post',
       headers: {
@@ -86,7 +86,7 @@ export function editUserFailed(error) {
 }
 export function editUser(name, password, confirmPassword, userId) {
   return (dispatch) => {
-    const url = 'http://localhost:8000/api/v1/users/edituser';
+    const url = 'https://api-codeial.herokuapp.com/api/v1/users/edituser';
     fetch(url, {
       method: 'post',
       headers: {
